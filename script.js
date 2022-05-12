@@ -43,14 +43,13 @@ slider.oninput = function() {
   console.log(numberOfPixels);
   spaceCleaner();
   allPixels(numberOfPixels);
-  pixelPainter("black");
+  colorChooser();
 }
 
 //  Hover efect
 function pixelPainter(color) {
   const pixelToPaint = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixelToPaint.length; i++) {
-    console.log(i);
     pixelToPaint[i].addEventListener("mouseover", () => {
       pixelToPaint[i].style.backgroundColor = color;
     });
@@ -58,11 +57,50 @@ function pixelPainter(color) {
 }
 
 //  buttons
-const clearButton = document.getElementsByClassName("clear");
+const clearBtn = document.getElementsByClassName("clear");
 
-clearButton[0].addEventListener("click", () => {
+clearBtn[0].addEventListener("click", () => {
   const pixelToPaint = document.querySelectorAll(".pixel");
   for (let i = 0; i < pixelToPaint.length; i++) {
     pixelToPaint[i].style.backgroundColor = "white";
   }
 });
+
+//  collor picker
+const colorPickBtn = document.getElementsByClassName("color-picker");
+
+let i = 0;
+
+colorPickBtn[0].addEventListener("click", () => {
+  const inputColor = document.createElement("input");
+  inputColor.classList.add("colorInput");
+  inputColor.type = "color";
+  if (i < 1) {
+  colorPickBtn[0].appendChild(inputColor);
+  i += 1;
+  }
+  colorChooser();
+});
+
+
+//  choosing color
+function colorChooser() {
+  const colorToRemove = document.getElementsByClassName("colorInput");
+  console.log(colorToRemove[0]);
+  if (typeof colorToRemove[0] != "undefined") {
+    pixelPainter(colorToRemove[0].value);
+    console.log(colorToRemove[0].value);
+  } else {pixelPainter("black");}
+}
+
+//  random color
+const randomColor = document.getElementsByClassName("random-color");
+
+randomColor[0].addEventListener("click", () => {
+  const pixelToPaint = document.querySelectorAll(".pixel");
+  for (let i = 0; i < pixelToPaint.length; i++) {
+    pixelToPaint[i].addEventListener("mouseover", () => {
+      pixelToPaint[i].style.backgroundColor = "#" + (Math.floor(Math.random() * 16777216).toString(16));
+    });
+  }
+})
